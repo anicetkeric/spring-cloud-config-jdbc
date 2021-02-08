@@ -1,0 +1,24 @@
+server:
+  port: 8888
+
+spring:
+  application:
+    name: cloud-config-server
+  main:
+    allow-bean-definition-overriding: true
+  profiles:
+    active: jdbc
+  datasource:
+    driver-class-name: org.postgresql.Driver
+    url: jdbc:postgresql://localhost:5432/config_jdbc
+    username: postgreslocaluser
+    password: k9ZqLC
+    hikari:
+      maximum-pool-size: 10
+      connection-timeout: 5000
+  cloud:
+    config:
+      server:
+        jdbc:
+          sql:  SELECT key, value from properties where application=? and profile=? and label=?
+          order: 1
